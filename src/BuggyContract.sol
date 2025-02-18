@@ -16,7 +16,8 @@ contract BuggyContract {
     }
 
     // Bug 1
-    () {
+    // fixed
+    function setOwner() public {
         owner = msg.sender;
     }
 
