@@ -42,8 +42,9 @@ contract BuggyContract {
 
     // Bug 5
     // Hint: make sure that message is only stored temporarily
-    function setMessage(string message) public {
-        messages = message;
+    // fixed
+    function setMessage(string memory newMessage) public {
+        messages = newMessage;
     }
 
     // Bug 6
