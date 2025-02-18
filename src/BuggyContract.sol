@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 pragma solidity ^0.8.13;
 
 contract BuggyContract {
@@ -6,6 +7,7 @@ contract BuggyContract {
     string messages;
     bool public isPaused;
     address owner;
+    using SafeMath for uint;
 
     modifier onlyOwner() {
         require(msg.sender == owner);
@@ -29,14 +31,16 @@ contract BuggyContract {
 
     // Bug 4
     function divideCount(uint divisor) public returns (uint) {
+        require(divisor > 0, "Divider cannot be zero");
+
         count = count / divisor;
         return count;
     }
 
     // Bug 5
     // Hint: make sure that message is only stored temporarily
-    function setMessage(string memory _message) public {
-        messages = _message;
+    function setMessage(string memory message) public {
+        messages = message;
     }
 
     // Bug 6
@@ -50,16 +54,16 @@ contract BuggyContract {
     // Bug 7
     // Hint: Think about math operation overflow
     function setCountWithMultiplication(uint x, uint y) public {
-        count = x * y;
+        count = x.mul(y);
     }
 
     // Bug 8
-    function resetCount() private onlyOwner {
+    function resetCount() external onlyOwner {
         count = 0;
     }
 
     // Bug 9
     function togglePause() public onlyOwner {
-        isPaused = isPaused;
+        isPaused = !isPaused;
     }
 }
