@@ -13,7 +13,7 @@ contract BuggyContract {
     }
 
     // Bug 1
-    () {
+    constructor() {
         owner = msg.sender;
     }
 
