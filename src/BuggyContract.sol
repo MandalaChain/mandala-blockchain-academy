@@ -12,58 +12,57 @@ contract BuggyContract {
         _;
     }
 
-    // Bug 1
-    () {
+    // Bug 1 (done)
+    constructor() {
         owner = msg.sender;
     }
 
-    // Bug 2
-    private function increment(uint amount) {
+    // Bug 2 (done)
+    function increment(uint amount) private {
         count += amount;
     }
 
-    // Bug 3
-    function getCount() view returns (uint) {
+    // Bug 3 (done)
+    function getCount() public view returns (uint) {
         return count;
     }
 
-    // Bug 4
+    // Bug 4 (done)
     function divideCount(uint divisor) public returns (uint) {
+        require (divisor > 0, "Cannot divide by 0");
         count = count / divisor;
         return count;
     }
 
-    // Bug 5
+    // Bug 5 (done)
     // Hint: make sure that message is only stored temporarily
-    function setMessage(string message) public {
+    function setMessage(string memory message) public {
         messages = message;
     }
 
-    // Bug 6
+    // Bug 6 (done)
     // Hint: two things to do here.
     // Think about how to make the loop more efficient
     // and read the compiler
-    function sumNumbers(uint n) public returns (uint) {
-        uint sum;
-        for (uint i; i <= n; i++) {
-            sum += i;
-        }
-        return sum;
+    function sumNumbers(uint n) public pure returns (uint) {
+        return (n * (n + 1)) / 2;
     }
 
-    // Bug 7
+    // Bug 7 (done)
     // Hint: Think about math operation overflow
     function setCountWithMultiplication(uint x, uint y) public {
-        count = x * y;
+        unchecked {
+            count = x * y;
+        }
     }
 
-    // Bug 8
-    function resetCount() onlyOwner {
+    // Bug 8 (done)
+    function resetCount() public onlyOwner {
         count = 0;
     }
 
-    // Bug 9
+    // Bug 9 (done)
     function togglePause() public onlyOwner {
-        isPaused = isPaused;
+        isPaused = !isPaused;
     }
 }
