@@ -61,6 +61,6 @@ contract BuggyContract {
 
     // Bug 9
     function togglePause() public onlyOwner {
-        isPaused = isPaused;
+        isPaused =! isPaused;
     }
 }
