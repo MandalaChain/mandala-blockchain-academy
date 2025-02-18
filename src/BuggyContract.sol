@@ -7,7 +7,7 @@ contract BuggyContract {
 
     uint private count = 0;
     string messages;
-    bool public isPaused;
+    bool public isPaused = false;
     address owner;
 
     modifier onlyOwner {
@@ -71,7 +71,8 @@ contract BuggyContract {
     }
 
     // Bug 9
+    // fixed
     function togglePause() public onlyOwner {
-        isPaused = isPaused;
+        isPaused != isPaused;
     }
 }
