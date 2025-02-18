@@ -29,6 +29,7 @@ contract BuggyContract {
 
     // Bug 4
     function divideCount(uint divisor) public returns (uint) {
+        require(divisor > 0, "Cannot divide by zero");
         count = count / divisor;
         return count;
     }
