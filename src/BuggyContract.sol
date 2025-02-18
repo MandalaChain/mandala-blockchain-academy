@@ -18,16 +18,19 @@ contract BuggyContract {
     }
 
     // Bug 2
+    // fixed
     function increment(uint amount) private {
         count += amount;
     }
 
     // Bug 3
-    function getCount() view returns (uint) {
+    // fixed
+    function getCount() public view returns (uint) {
         return count;
     }
 
     // Bug 4
+    //fixed
     function divideCount(uint divisor) public view returns (uint) {
         count = count / divisor;
         return count;
