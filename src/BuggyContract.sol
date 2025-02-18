@@ -28,7 +28,7 @@ contract BuggyContract {
     }
 
     // Bug 4
-    function divideCount(uint divisor) public returns (uint) {
+    function divideCount(uint divisor) public view returns (uint) {
         count = count / divisor;
         return count;
     }
@@ -44,9 +44,9 @@ contract BuggyContract {
     // Think about how to make the loop more efficient
     // and read the compiler
     // loop fixed
-    function sumNumbers(uint256 n) public pure returns (uint) {
-        uint256 sum = 0;
-        for (uint256 i = 0; i <= n; i++) {
+    function sumNumbers(uint n) public pure returns (uint) {
+        uint sum = 0;
+        for (uint i = 0; i <= n; i++) {
             sum += i;
         }
         return sum;
