@@ -46,6 +46,7 @@ contract BuggyContract {
     // Think about how to make the loop more efficient
     // and read the compiler
     function sumNumbers(uint n) public pure returns (uint) {
+        require(n <= type(uint).max , "overflow should be!");
         uint sum;
         for (uint i=1; i <= n; i++) {
             sum += i;
