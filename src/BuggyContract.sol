@@ -3,11 +3,11 @@ pragma solidity ^0.8.13;
 
 contract BuggyContract {
     uint private count = 0;
-    string messages;
+    string public messages;
     bool public isPaused;
-    address owner;
+    address public owner;
 
-    modifier onlyOwner {
+    modifier onlyOwner () {
         require(msg.sender == owner);
         _;
     }
@@ -18,7 +18,7 @@ contract BuggyContract {
     }
 
     // Bug 2
-    function increment (uint amount) private  {
+    function increment (uint amount) public  {
         count += amount;
     }
 
@@ -29,6 +29,7 @@ contract BuggyContract {
 
     // Bug 4
     function divideCount(uint divisor) public returns (uint) {
+        require (divisor != 0, "Cannot divide by zero" );
         count = count / divisor;
         return count;
     }
@@ -54,6 +55,7 @@ contract BuggyContract {
     // Bug 7
     // Hint: Think about math operation overflow
     function setCountWithMultiplication(uint x, uint y) public {
+        require(x <= type(uint).max / y, "Overflow deteced");
         count = x * y;
     }
 
@@ -64,6 +66,6 @@ contract BuggyContract {
 
     // Bug 9
     function togglePause() public onlyOwner {
-        isPaused = isPaused;
+        isPaused = !isPaused;
     }
 }
