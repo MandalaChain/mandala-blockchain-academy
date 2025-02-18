@@ -7,7 +7,7 @@ contract BuggyContract {
     bool public isPaused;
     address owner;
 
-    modifier onlyOwner {
+    modifier onlyOwner (){
         require(msg.sender == owner);
         _;
     }
@@ -18,7 +18,7 @@ contract BuggyContract {
     }
 
     // Bug 2
-    function increment(uint amount) public onlyOwner {
+    function increment(uint amount) private onlyOwner {
         count += amount;
     }
 
