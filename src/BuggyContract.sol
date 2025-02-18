@@ -7,23 +7,23 @@ contract BuggyContract {
     bool public isPaused;
     address owner;
 
-    modifier onlyOwner {
+    modifier onlyOwner() {
         require(msg.sender == owner);
         _;
     }
 
     // Bug 1
-    () {
+    constructor() {
         owner = msg.sender;
     }
 
     // Bug 2
-    private function increment(uint amount) {
+    function increment(uint amount) private {
         count += amount;
     }
 
     // Bug 3
-    function getCount() view returns (uint) {
+    function getCount() public view returns (uint) {
         return count;
     }
 
@@ -35,20 +35,16 @@ contract BuggyContract {
 
     // Bug 5
     // Hint: make sure that message is only stored temporarily
-    function setMessage(string message) public {
-        messages = message;
+    function setMessage(string memory _message) public {
+        messages = _message;
     }
 
     // Bug 6
     // Hint: two things to do here.
     // Think about how to make the loop more efficient
     // and read the compiler
-    function sumNumbers(uint n) public returns (uint) {
-        uint sum;
-        for (uint i; i <= n; i++) {
-            sum += i;
-        }
-        return sum;
+    function sumNumbers(uint n) public pure returns (uint) {
+        return (n * (n + 1)) / 2;
     }
 
     // Bug 7
@@ -58,7 +54,7 @@ contract BuggyContract {
     }
 
     // Bug 8
-    function resetCount() onlyOwner {
+    function resetCount() private onlyOwner {
         count = 0;
     }
 
