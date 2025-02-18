@@ -18,7 +18,7 @@ contract BuggyContract {
     }
 
     // Bug 2
-    private function increment(uint amount) {
+    function increment(uint amount) private {
         count += amount;
     }
 
