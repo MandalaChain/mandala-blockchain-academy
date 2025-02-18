@@ -7,35 +7,42 @@ contract BuggyContract {
     bool public isPaused;
     address owner;
 
-    modifier onlyOwner {
+    error nonZeroNumber(uint256 number, string massage);
+
+    modifier onlyOwner() {
         require(msg.sender == owner);
         _;
     }
 
     // Bug 1
-    () {
+    constructor() {
         owner = msg.sender;
     }
 
     // Bug 2
-    private function increment(uint amount) {
+    function increment(uint amount) internal {
         count += amount;
     }
 
     // Bug 3
-    function getCount() view returns (uint) {
+    function getCount() public view returns (uint) {
         return count;
     }
 
     // Bug 4
     function divideCount(uint divisor) public returns (uint) {
-        count = count / divisor;
+        if (divisor == 0) {
+            revert nonZeroNumber(divisor, "Can't divide by zero");
+        }
+        if (divisor != 0) {
+            count = count / divisor;
+        }
         return count;
     }
 
     // Bug 5
     // Hint: make sure that message is only stored temporarily
-    function setMessage(string message) public {
+    function setMessage(string calldata message) public {
         messages = message;
     }
 
@@ -43,27 +50,27 @@ contract BuggyContract {
     // Hint: two things to do here.
     // Think about how to make the loop more efficient
     // and read the compiler
-    function sumNumbers(uint n) public returns (uint) {
-        uint sum;
-        for (uint i; i <= n; i++) {
-            sum += i;
+    function sumNumbers(uint n) public pure returns (uint) {
+        if (n == 0) {
+            revert nonZeroNumber(n, "Can't sum zero numbers");
         }
-        return sum;
+        return (n * (n + 1)) / 2; // using arithmetic progression formula
     }
 
     // Bug 7
     // Hint: Think about math operation overflow
     function setCountWithMultiplication(uint x, uint y) public {
+        require(x * y > type(uint).max);
         count = x * y;
     }
 
     // Bug 8
-    function resetCount() onlyOwner {
+    function resetCount() internal onlyOwner {
         count = 0;
     }
 
     // Bug 9
     function togglePause() public onlyOwner {
-        isPaused = isPaused;
+        isPaused = !isPaused;
     }
 }
