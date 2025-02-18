@@ -18,7 +18,7 @@ contract BuggyContract {
     }
 
     // Bug 2
-    function increment(uint amount) private onlyOwner {
+    function increment(uint amount) private {
         count += amount;
     }
 
@@ -29,6 +29,7 @@ contract BuggyContract {
 
     // Bug 4
     function divideCount(uint divisor) public returns (uint) {
+        require(divisor != 0,"can't divide by 0");
         count = count / divisor;
         return count;
     }
@@ -44,26 +45,24 @@ contract BuggyContract {
     // Think about how to make the loop more efficient
     // and read the compiler
     function sumNumbers(uint n) public pure returns (uint) {
-        uint sum;
-        for (uint i; i <= n; i++) {
-            sum += i;
-        }
-        return sum;
+        return (n*(n+1)) / 2;
     }
 
     // Bug 7
     // Hint: Think about math operation overflow
     function setCountWithMultiplication(uint x, uint y) public {
+        require(x == 0 || count / x == y, "Overflow Error");
         count = x * y;
     }
 
     // Bug 8
-    function resetCount() private onlyOwner {
+    function resetCount() public onlyOwner {
         count = 0;
     }
 
     // Bug 9
     function togglePause() public onlyOwner {
+        isPaused = isPaused;
         isPaused = !isPaused;
     }
 }
