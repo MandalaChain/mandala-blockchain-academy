@@ -66,7 +66,8 @@ contract BuggyContract {
     }
 
     // Bug 8
-    function resetCount() onlyOwner {
+    // fixed
+    function resetCount() public onlyOwner {
         count = 0;
     }
 
