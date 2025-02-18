@@ -3,67 +3,58 @@ pragma solidity ^0.8.13;
 
 contract BuggyContract {
     uint private count = 0;
-    string messages;
+    address private owner;
     bool public isPaused;
-    address owner;
+
+    constructor() {
+        owner = msg.sender; // Bug 1: Perbaiki constructor
+    }
 
     modifier onlyOwner {
-        require(msg.sender == owner);
+        require(msg.sender == owner, "Only owner can call this function");
         _;
     }
 
-    // Bug 1
-    () {
-        owner = msg.sender;
-    }
-
-    // Bug 2
-    private function increment(uint amount) {
+    // Fungsi untuk increment, private visibility diperbaiki
+    function increment(uint amount) private {
         count += amount;
     }
 
-    // Bug 3
-    function getCount() view returns (uint) {
+    // Fungsi untuk mendapatkan nilai count
+    function getCount() public view returns (uint) {
         return count;
     }
 
-    // Bug 4
+    // Fungsi untuk membagi count dengan pemeriksaan divisor = 0
     function divideCount(uint divisor) public returns (uint) {
+        require(divisor != 0, "Divisor cannot be zero");
         count = count / divisor;
         return count;
     }
 
-    // Bug 5
-    // Hint: make sure that message is only stored temporarily
-    function setMessage(string message) public {
-        messages = message;
+    // Fungsi untuk set message (disimpan sebagai variabel temporer)
+    function setMessage(string memory message) public {
+        string memory tempMessage = message;
     }
 
-    // Bug 6
-    // Hint: two things to do here.
-    // Think about how to make the loop more efficient
-    // and read the compiler
-    function sumNumbers(uint n) public returns (uint) {
-        uint sum;
-        for (uint i; i <= n; i++) {
-            sum += i;
-        }
-        return sum;
+    // Fungsi untuk menghitung penjumlahan n angka
+    function sumNumbers(uint n) public pure returns (uint) {
+        return (n * (n + 1)) / 2; // Menggunakan formula langsung untuk efisiensi
     }
 
-    // Bug 7
-    // Hint: Think about math operation overflow
+    // Fungsi untuk set count dengan multiplikasi
     function setCountWithMultiplication(uint x, uint y) public {
+        // Gunakan unchecked jika diperlukan atau overflow checks (v0.8+ sudah built-in overflow protection)
         count = x * y;
     }
 
-    // Bug 8
-    function resetCount() onlyOwner {
+    // Fungsi untuk reset count (tambahkan public visibility)
+    function resetCount() public onlyOwner {
         count = 0;
     }
 
-    // Bug 9
+    // Fungsi untuk toggle isPaused
     function togglePause() public onlyOwner {
-        isPaused = isPaused;
+        isPaused = !isPaused; // Menggunakan negasi boolean
     }
 }
