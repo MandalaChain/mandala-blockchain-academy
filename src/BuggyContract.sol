@@ -55,7 +55,7 @@ contract BuggyContract {
     // Bug 7
     // Hint: Think about math operation overflow
     function setCountWithMultiplication(uint x, uint y) public {
-        // QUESTION: do we need to use revert or require ? i read online that solidity 0.8 does automaticly revert overflow operation 
+        // NOTE: solidity 0.8 automatically revert math operation overflow
         count = x * y;
     }
 
