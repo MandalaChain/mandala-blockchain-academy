@@ -13,39 +13,39 @@ contract BuggyContract {
     }
 
     // Bug 1
-    () {
+    constructor() {
         owner = msg.sender;
-    }
+    }   
 
     // Bug 2
-    private function increment(uint amount) {
+    function increment(uint amount) private {
         count += amount;
     }
 
     // Bug 3
-    function getCount() view returns (uint) {
+    function getCount() public view returns (uint) {
         return count;
     }
 
     // Bug 4
-    function divideCount(uint divisor) public returns (uint) {
-        count = count / divisor;
-        return count;
+    function divideCount(uint divisor) public view returns (uint) {
+        require(divisor != 0, "Division by zero");
+        return count/divisor;
     }
 
     // Bug 5
     // Hint: make sure that message is only stored temporarily
-    function setMessage(string message) public {
-        messages = message;
+    function setMessage(string memory newMessage) public {
+        messages = newMessage;
     }
 
     // Bug 6
     // Hint: two things to do here.
     // Think about how to make the loop more efficient
     // and read the compiler
-    function sumNumbers(uint n) public returns (uint) {
-        uint sum;
-        for (uint i; i <= n; i++) {
+    function sumNumbers(uint n) public pure returns (uint) {
+        uint sum = 0;
+        for (uint i = 0; i <= n; i++) {
             sum += i;
         }
         return sum;
@@ -54,16 +54,17 @@ contract BuggyContract {
     // Bug 7
     // Hint: Think about math operation overflow
     function setCountWithMultiplication(uint x, uint y) public {
+        require(y == 0 || x <= (type(uint).max / y), "Error");
         count = x * y;
     }
 
     // Bug 8
-    function resetCount() onlyOwner {
+    function resetCount() public onlyOwner {
         count = 0;
     }
 
     // Bug 9
     function togglePause() public onlyOwner {
-        isPaused = isPaused;
+        isPaused = !isPaused;
     }
 }
