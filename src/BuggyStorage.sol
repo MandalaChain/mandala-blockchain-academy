@@ -55,6 +55,8 @@ contract BuggyStorage {
 
     function getBalance(address user) public view returns (uint) {
         // Task 5: Returning the balance for a specific user
+        //done
+        return user.balance;
     }
 
     // Bug 5: How to safely pop elements from the array?
@@ -66,5 +68,7 @@ contract BuggyStorage {
 
     function updateBalance(address user, uint amount) public {
         // Task 6: Update balance of a user with a specific amount
+        //fixed
+        balances[user] = amount;
     }
 }
