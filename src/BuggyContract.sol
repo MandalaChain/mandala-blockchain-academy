@@ -51,11 +51,10 @@ contract BuggyContract {
 
     // Bug 7
     // Hint: Think about math operation overflow
-    function setCountWithMultiplication(uint256 x, uint256 y) public {
-        unchecked {
-            require(x == 0 || (x * y) / x == y, "Multiplication overflow");
-            count = x * y;
-        }
+    function setCountWithMultiplication(uint x, uint y) public {
+        uint result = x * y;
+        require(y == 0 || result / y == x, "Multiplication overflow");
+        count = result;
     }
 
     // Bug 8
