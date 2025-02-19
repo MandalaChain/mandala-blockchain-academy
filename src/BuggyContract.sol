@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-contract FixedContract {
+contract BuggyContract {
     uint private count = 0;
     string messages; 
     bool public isPaused;
