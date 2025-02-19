@@ -49,8 +49,7 @@ contract BuggyContract {
     // and read the compiler
     function sumNumbers(uint n) public pure returns (uint) {
         uint sum;
-        if ((n % 2) == 0) sum = (n + 1) * (n / 2);
-        if ((n % 2) != 0) sum = n * ((n+1)/2);
+        sum = n * (n + 1) / 2;
         return sum;
 
     }
