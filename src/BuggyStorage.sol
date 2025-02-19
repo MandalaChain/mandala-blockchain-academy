@@ -6,7 +6,7 @@ contract BuggyStorage {
     // Task 1: Declare an array as numbers;
     uint256[] public numbers = [1,2,3,4,5,6,7,8];
     // Task 2: Declare a string as message;
-    string message;
+    string message = "Mandala";
     // Task 3: Declare a mapping of address to balance as balances;
     mapping(address => uint256) public balances;
 
