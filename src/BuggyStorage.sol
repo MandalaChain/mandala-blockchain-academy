@@ -12,6 +12,10 @@ contract BuggyStorage {
     // Task 3: Declare a mapping of address to balance as balances;
     mapping(address => uint) public balances;
 
+    /* --------------------------------- EVENTS --------------------------------- */
+    event LastNumberRemoved(uint removedNumber);
+    event BalanceUpdated(address indexed user, uint newBalance);
+
     // Bug 1: Array bounds
     function getNumber(uint index) public view returns (uint) {
         require(index < numbers.length, "Index out of bounds");
@@ -26,21 +30,28 @@ contract BuggyStorage {
     // Bug 2: Slice array correctly
     function sliceArray(uint start, uint end) public view returns (uint[] memory) {
         require(start < end && end <= numbers.length, "Invalid slice range");
+
         uint[] memory slicedArray = new uint[](end - start);
+
         for (uint i = start; i < end; i++) {
             slicedArray[i - start] = numbers[i];
         }
+
         return slicedArray;
     }
 
     // Bug 3: Concatenate strings correctly
     function setMessage(string memory newMessage) public {
+        require(bytes(newMessage).length > 0, "Message cannot be empty");
+        
         message = string(abi.encodePacked(message, newMessage));
     }
 
     // Bug 4: How do we update numbers with memory as params?
     function validMemoryUsage(uint[] memory input) public {
         // Implement logics to update numbers here
+        require(input.length > 0, "Input array cannot be empty");
+
         for (uint i = 0; i < input.length; i++) {
             numbers.push(input[i]);
         }
@@ -54,11 +65,17 @@ contract BuggyStorage {
     // Bug 5: How to safely pop elements from the array?
     function removeLastNumber() public {
         require(numbers.length > 0, "No elements to pop");
+
+        uint removedNumber = numbers[numbers.length - 1];
         numbers.pop();
+
+        emit LastNumberRemoved(removedNumber);
     }
 
     function updateBalance(address user, uint amount) public {
         // Task 6: Update balance of a user with a specific amount
         balances[user] = amount;
+        
+        emit BalanceUpdated(user, amount);
     }
 }
