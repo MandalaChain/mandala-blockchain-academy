@@ -29,7 +29,7 @@ contract BuggyContract {
 
     // Bug 4
     function divideCount(uint divisor) public returns (uint) {
-        require(divisor!=0, "Divisor value cannot be zero")
+        require(divisor!=0, "Divisor value cannot be zero");
         count = count / divisor;
         return count;
     }
@@ -45,19 +45,18 @@ contract BuggyContract {
     // Think about how to make the loop more efficient
     // and read the compiler
     function sumNumbers(uint n) public pure returns (uint) {
-        uint sum=1;
-        for (uint i = 2; i <= n; i++) {
+        uint sum=0;
+        for (uint i = 0; i <= n; i++) {
             sum += i;
         }
-        return sum;
+            return sum;
     }
 
     // Bug 7
     // Hint: Think about math operation overflow
     function setCountWithMultiplication(uint x, uint y) public {
-        unchecked {
-            count = x * y;
-        }
+        require(x == 0 || count / x == y, "Multiplication overflow");
+        count = x * y;
     }
 
     // Bug 8
