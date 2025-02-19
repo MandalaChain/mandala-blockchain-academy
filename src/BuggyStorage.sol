@@ -25,7 +25,7 @@ contract BuggyStorage {
 
     // Bug 2: Slice array correctly
     function sliceArray(uint start, uint end) public view returns (uint[] memory) {
-        if (start < end){
+        if (end < start){
             revert InvalidRangeNumers(start, end);
         }
 
