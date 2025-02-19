@@ -36,18 +36,18 @@ contract BuggyStorage {
     ) public view returns (uint256[] memory) {
         require(start < end && end <= numbers.length, "Invalid slice range");
         uint total = end - start;
-        uint[] memory sliceData = new uint256[](total);
+        uint[] memory _sliceData = new uint256[](total);
         for (uint256 index = start; index < end; index++) {
-            sliceData[index] = numbers[start + index];
+            _sliceData[index - start] = numbers[index];
         }
 
-        return sliceData;
+        return _sliceData;
     }
 
     // Bug 3: Concatenate strings correctly
     // bugfix
     function setMessage(string memory newMessage) public {
-        message = string.concat(message, newMessage);
+        message = string(abi.encodePacked(message, newMessage));
     }
 
     // Bug 4: How do we update numbers with memory as params?
