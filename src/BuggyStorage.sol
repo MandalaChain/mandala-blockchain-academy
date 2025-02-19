@@ -26,8 +26,17 @@ contract BuggyStorage {
     }
 
     // Bug 2: Slice array correctly
+    //fixed
     function sliceArray(uint256 start, uint256 end) public view returns (uint256[] memory) {
-        return numbers[start:end];
+        uint256[] memory slice;
+
+        uint256 u = 0;
+        for(uint256 i=start; i<end; i++) {
+            slice[u] = numbers[i];
+            u++;
+        }
+
+        return slice;
     }
 
     // Bug 3: Concatenate strings correctly
