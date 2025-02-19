@@ -45,11 +45,8 @@ contract BuggyContract {
     // Think about how to make the loop more efficient
     // and read the compiler
     function sumNumbers(uint n) public pure returns (uint) {
-        uint sum;
-        for (uint i; i <= n; i++) {
-            sum += i;
-        }
-        return sum;
+        // Gauss's formula
+        return (n * (n + 1)) / 2;
     }
 
     // Bug 7
