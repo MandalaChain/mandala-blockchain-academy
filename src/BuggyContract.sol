@@ -47,11 +47,12 @@ contract BuggyContract {
     // and read the compiler
     function sumNumbers(uint n) public pure returns (uint) {
         require(n <= type(uint).max , "overflow should be!");
-        uint sum;
-        for (uint i=1; i <= n; i++) {
-            sum += i;
-        }
-        return sum;
+        // uint sum;
+        // for (uint i=1; i <= n; i++) {
+        //     sum += i;
+        // }
+        // return sum;
+        return (n * (n+1)) /2;
     }
 
     // Bug 7
