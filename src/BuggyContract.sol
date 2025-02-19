@@ -18,8 +18,8 @@ contract BuggyContract {
     }
 
     // Bug 2 - done
-    function increment(uint256 amount) private {
-        count += amount;
+    function increment(uint256 _amount) private {
+        count += _amount;
     }
 
     // Bug 3 - done
@@ -28,24 +28,24 @@ contract BuggyContract {
     }
 
     // Bug 4 - done
-    function divideCount(uint256 divisor) public returns (uint256) {
-        count = count / divisor;
+    function divideCount(uint256 _divisor) public returns (uint256) {
+        count = count / _divisor;
         return count;
     }
 
     // Bug 5 - done
     // Hint: make sure that message is only stored temporarily
-    function setMessage(string memory message) public {
-        messages = message;
+    function setMessage(string memory _message) public {
+        messages = _message;
     }
 
     // Bug 6 - done
     // Hint: two things to do here.
     // Think about how to make the loop more efficient
     // and read the compiler
-    function sumNumbers(uint256 n) public pure returns (uint256) {
+    function sumNumbers(uint256 _n) public pure returns (uint256) {
         uint256 sum = 0;
-        for (uint256 i = 0; i <= n; i++) {
+        for (uint256 i = 0; i <= _n; i++) {
             sum += i;
         }
         return sum;
@@ -53,8 +53,8 @@ contract BuggyContract {
 
     // Bug 7 - done
     // Hint: Think about math operation overflow
-    function setCountWithMultiplication(uint256 x, uint256 y) public {
-        unchecked { count = x * y; }
+    function setCountWithMultiplication(uint256 _x, uint256 _y) public {
+        unchecked { count = _x * _y; }
     }
 
     // Bug 8 - done
