@@ -12,7 +12,7 @@ contract BuggyStorage {
 
     // Bug 1: Array bounds
     function getNumber(uint256 index) public view returns (uint256) {
-        require(index < numbers.length, "the index is out of range!");
+        require(index < numbers.length , "the index is out of range!");
         return numbers[index]; 
     }
 
