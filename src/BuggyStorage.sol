@@ -4,12 +4,21 @@ pragma solidity ^0.8.0;
 contract BuggyStorage {
     // DO NOT EDIT COMMENTS
     // Task 1: Declare an array as numbers;
+    uint256[] public numbers;
     // Task 2: Declare a string as message;
+    string message;
     // Task 3: Declare a mapping of address to balance as balances;
+    mapping(address => uint256) public balances;
 
     // Bug 1: Array bounds
     function getNumber(uint index) public view returns (uint) {
+        require(index < numbers.length, "index out of bounds");
         return numbers[index]; 
+    }
+
+    function addNumber(uint number) public {
+        numbers.push(number);
+        // Task 4: Implement adding numbers to the array
     }
 
     function addNumber(uint number) public {
