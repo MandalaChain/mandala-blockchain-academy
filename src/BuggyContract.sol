@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
-error DivisionByZero();
 
 contract BuggyContract {
     uint private count = 0;
     string messages;
     bool public isPaused;
     address owner;
+    error DivisionByZero();
 
     modifier onlyOwner {
         require(msg.sender == owner);
