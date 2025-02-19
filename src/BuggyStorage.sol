@@ -9,7 +9,7 @@ contract BuggyStorage {
 
     // Task 2: Declare a string as message;
     // done
-    string internal message = "helo";
+    string internal message;
 
     // Task 3: Declare a mapping of address to balance as balances;
     // done
@@ -18,7 +18,7 @@ contract BuggyStorage {
     // Bug 1: Array bounds
     // bugfix
     function getNumber(uint256 index) public view returns (uint256) {
-        require(index < numbers.length, "out of bounds");
+        require(index < numbers.length, "index out of bounds");
         return numbers[index];
     }
 
@@ -34,6 +34,7 @@ contract BuggyStorage {
         uint256 start,
         uint256 end
     ) public view returns (uint256[] memory) {
+        require(start < end && end <= numbers.length, "Invalid slice range");
         uint256[] memory slice;
 
         uint256 no = 0;
@@ -54,6 +55,7 @@ contract BuggyStorage {
     // Bug 4: How do we update numbers with memory as params?
     // bugfix
     function validMemoryUsage(uint256[] memory input) public {
+        delete numbers;
         uint256[] memory ref = input;
         // Implement logics to update numbers here
         numbers = ref;
@@ -68,7 +70,7 @@ contract BuggyStorage {
     // Bug 5: How to safely pop elements from the array?
     // bugfix
     function removeLastNumber() public {
-        require(numbers.length > 0, "no arrays to remove");
+        require(numbers.length > 0, "no elements to remove");
         numbers.pop();
     }
 
