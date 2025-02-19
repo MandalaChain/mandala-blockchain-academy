@@ -31,14 +31,17 @@ contract BuggyStorage {
     }
 
     // Bug 3: Concatenate strings correctly
+    //fixed
     function setMessage(string memory newMessage) public {
         message = string(bytes.concat(bytes(message), bytes(newMessage)));
     }
 
     // Bug 4: How do we update numbers with memory as params?
-    function validMemoryUsage(uint[] memory input) public {
-        uint[] storage ref = input;
+    //fixed
+    function validMemoryUsage(uint256[] memory input) public {
+        uint256[] memory ref = input;
         // Implement logics to update numbers here
+        numbers = ref;
     }
 
     function getBalance(address user) public view returns (uint) {
