@@ -49,7 +49,7 @@ contract BuggyStorage {
     // Bug 3: Concatenate strings correctly
     // bugfix
     function setMessage(string memory newMessage) public {
-        message = string(bytes.concat(bytes(message), bytes(newMessage)));
+        message = string(abi.encodePacked(message, newMessage));
     }
 
     // Bug 4: How do we update numbers with memory as params?
