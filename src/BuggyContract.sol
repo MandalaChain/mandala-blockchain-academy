@@ -44,12 +44,8 @@ contract BuggyContract {
     // Hint: two things to do here.
     // Think about how to make the loop more efficient
     // and read the compiler
-    function sumNumbers(uint256 n) public pure returns (uint256) {
-        uint256 sum = 0;
-        for (uint256 i = 1; i <= n; i++) {
-            sum += i;
-        }
-        return sum;
+   function sumNumber(uint256 n) public pure returns (uint256) {
+        return (n*(n+1)) /2;
     }
 
     // Bug 7
