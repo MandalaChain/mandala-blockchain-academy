@@ -14,7 +14,9 @@ contract BuggyStorage {
     mapping(address => uint) public balances;
 
     // Bug 1: Array bounds
+    //fixed
     function getNumber(uint256 index) public view returns (uint256) {
+        require(index < numbers.length, "index out of bounds");
         return numbers[index]; 
     }
 
