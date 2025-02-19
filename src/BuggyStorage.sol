@@ -33,6 +33,7 @@ contract BuggyStorage {
 
     // Bug 3: Concatenate strings correctly
     function setMessage(string memory newMessage) public {
+        newMessage = "Chain";
         message = string.concat(message,newMessage);
     }
 
