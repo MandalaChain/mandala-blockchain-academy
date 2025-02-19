@@ -23,16 +23,12 @@ contract BuggyStorage {
 
     // Bug 2: Slice array correctly
     function sliceArray(uint start, uint end) public view returns (uint[] memory) {
-        uint256 len = numbers.length;
-
-        require(start <= end && end <= len, "invalid");
-
-        uint256[] memory result = new uint256[](end - start);
-        for(uint256 i; i < result.length; i++){
-            result[i] = numbers[start + i];
+        require(start <= end && end <= numbers.length, "Invalid");
+        uint256[] memory _sliceArray = new  uint256[](end - start);
+        for(uint i = start; i < end;i++){
+            _sliceArray[i-start] = numbers[i];
         }
-
-        return result;
+        return _sliceArray;
     }
 
     // Bug 3: Concatenate strings correctly
