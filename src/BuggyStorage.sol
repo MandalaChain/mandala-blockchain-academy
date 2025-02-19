@@ -17,7 +17,6 @@ contract BuggyStorage {
     }
 
     function addNumber(uint number) public {
-        number = 9;
         numbers.push(number);
         // Task 4: Implement adding numbers to the array
     }
