@@ -48,7 +48,7 @@ contract BuggyStorage {
     // Bug 5: How to safely pop elements from the array?
     //fixed
     function removeLastNumber() public {
-        if (numbers.length <= 0) return;
+        require(numbers.length > 0, "no array elements to remove");
         numbers.pop();
     }
 
