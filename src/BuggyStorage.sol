@@ -35,36 +35,35 @@ contract BuggyStorage {
         uint256 end
     ) public view returns (uint256[] memory) {
         require(start < end && end <= numbers.length, "Invalid slice range");
-        uint256[] memory slice;
-
-        uint256 no = 0;
+        uint total = end - start;
+        uint[] memory sliceData = new uint256[](total);
         for (uint256 index = start; index < end; index++) {
-            slice[no] = numbers[index];
-            no++;
+            sliceData[index] = numbers[start + index];
         }
 
-        return slice;
+        return sliceData;
     }
 
     // Bug 3: Concatenate strings correctly
     // bugfix
     function setMessage(string memory newMessage) public {
-        message = string(abi.encodePacked(message, newMessage));
+        message = string.concat(message, newMessage);
     }
 
     // Bug 4: How do we update numbers with memory as params?
     // bugfix
     function validMemoryUsage(uint256[] memory input) public {
         delete numbers;
-        uint256[] memory ref = input;
         // Implement logics to update numbers here
-        numbers = ref;
+        for (uint i = 0; i < input.length; i++) {
+            numbers.push(input[i]);
+        }
     }
 
     function getBalance(address user) public view returns (uint) {
         // Task 5: Returning the balance for a specific user
         // done
-        return user.balance;
+        return balances[user];
     }
 
     // Bug 5: How to safely pop elements from the array?
