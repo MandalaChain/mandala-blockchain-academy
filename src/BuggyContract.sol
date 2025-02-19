@@ -13,7 +13,7 @@ contract BuggyContract {
     }
 
     // Bug 1
-    constructor() {
+    constructor () {
         owner = msg.sender;
     }
 
@@ -44,9 +44,9 @@ contract BuggyContract {
     // Think about how to make the loop more efficient
     // and read the compiler
     function sumNumbers(uint n) public pure returns (uint) {
-        uint sum = 0 ;
-        for (uint i = 1 ; i <= n; i++) {
-            unchecked { sum += i; }
+        uint sum= 0;
+        for (uint i= 1; i <= n; i++) {
+            sum += i;
         }
         return sum;
     }
@@ -54,8 +54,11 @@ contract BuggyContract {
     // Bug 7
     // Hint: Think about math operation overflow
     function setCountWithMultiplication(uint x, uint y) public {
-         require(y == 0 || x <= (type(uint).max / y), "Multiplication overflow");
-        count = x * y;
+        unchecked {
+            uint result = x * y;
+            require(result /x == y, "overflow");
+            count = result;
+        }
     }
 
     // Bug 8
