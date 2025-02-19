@@ -3,45 +3,63 @@ pragma solidity ^0.8.0;
 
 contract BuggyStorage {
     // DO NOT EDIT COMMENTS
-    // Task 1: Declare an array as numbers;
-    // Task 2: Declare a string as message;
-    // Task 3: Declare a mapping of address to balance as balances;
+    // Task 1: Declare an array as numbers; (done)
+    uint[] public numbers;
+    // Task 2: Declare a string as message; (done)
+    string public message;
+    // Task 3: Declare a mapping of address to balance as balances; (done)
+    mapping(address => uint) public balances;
 
-    // Bug 1: Array bounds
+    // Bug 1: Array bounds (done)
     function getNumber(uint index) public view returns (uint) {
+        require(index < numbers.length, "Index out of bounds");
         return numbers[index]; 
     }
 
     function addNumber(uint number) public {
-        // Task 4: Implement adding numbers to the array
+        // Task 4: Implement adding numbers to the array (done)
+        numbers.push(number);
     }
 
-    // Bug 2: Slice array correctly
+    // Bug 2: Slice array correctly (done)
     function sliceArray(uint start, uint end) public view returns (uint[] memory) {
-        return numbers[start:end];
+        require(start < numbers.length && end <= numbers.length && start < end, "Invalid range");
+
+        uint[] memory result = new uint[](end - start);
+        for (uint i = start; i < end; i++) {
+            result[i - start] = numbers[i];
+        }
+
+        return result;
     }
 
-    // Bug 3: Concatenate strings correctly
+    // Bug 3: Concatenate strings correctly (done)
     function setMessage(string memory newMessage) public {
-        message += newMessage;
+        message = string(abi.encodePacked(message, newMessage));
     }
 
-    // Bug 4: How do we update numbers with memory as params?
+    // Bug 4: How do we update numbers with memory as params? (done)
     function validMemoryUsage(uint[] memory input) public {
-        uint[] storage ref = input;
+        delete numbers;
+        for (uint i = 0; i < input.length; i++) {
+            numbers.push(input[i]);
+        }
         // Implement logics to update numbers here
     }
 
     function getBalance(address user) public view returns (uint) {
-        // Task 5: Returning the balance for a specific user
+        // Task 5: Returning the balance for a specific user (done)
+        return balances[user];
     }
 
-    // Bug 5: How to safely pop elements from the array?
+    // Bug 5: How to safely pop elements from the array? (done)
     function removeLastNumber() public {
+        require(numbers.length > 0, "Array is empty");
         numbers.pop();
     }
 
     function updateBalance(address user, uint amount) public {
-        // Task 6: Update balance of a user with a specific amount
+        // Task 6: Update balance of a user with a specific amount (done)
+        balances[user] += amount;
     }
 }
