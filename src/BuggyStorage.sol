@@ -54,11 +54,10 @@ contract BuggyStorage {
         }
     }
 
-    function getBalance() public view returns (uint) {
+    function getBalance(address user) public view returns (uint) {
         // Task 5: Returning the balance for a specific user
 
-        // getting user address by `msg.sender`, no need params in this function
-        return balances[msg.sender];
+        return balances[user];
     }
 
     // Bug 5: How to safely pop elements from the array?
