@@ -3,67 +3,62 @@ pragma solidity ^0.8.13;
 
 contract BuggyContract {
     uint private count = 0;
-    string messages;
+    string private message;  // Changed from messages to message since we store one at a time
     bool public isPaused;
-    address owner;
+    address public owner;    // Made owner public for better transparency
 
-    modifier onlyOwner {
-        require(msg.sender == owner);
+    modifier onlyOwner() {  // Added parentheses
+        require(msg.sender == owner, "Not owner");  // Added error message
         _;
     }
 
-    // Bug 1
-    () {
+    // Bug 1 - Fixed constructor syntax
+    constructor() {
         owner = msg.sender;
     }
 
-    // Bug 2
-    private function increment(uint amount) {
+    // Bug 2 - Changed private to public
+    function increment(uint amount) public {
         count += amount;
     }
 
-    // Bug 3
-    function getCount() view returns (uint) {
+    // Bug 3 - Added public visibility
+    function getCount() public view returns (uint) {
         return count;
     }
 
-    // Bug 4
+    // Bug 4 - Added check for division by zero
     function divideCount(uint divisor) public returns (uint) {
+        require(divisor > 0, "Cannot divide by zero");
         count = count / divisor;
         return count;
     }
 
-    // Bug 5
-    // Hint: make sure that message is only stored temporarily
-    function setMessage(string message) public {
-        messages = message;
+    // Bug 5 - Added memory keyword for temporary storage
+    function setMessage(string memory _message) public {
+        message = _message;
     }
 
-    // Bug 6
-    // Hint: two things to do here.
-    // Think about how to make the loop more efficient
-    // and read the compiler
-    function sumNumbers(uint n) public returns (uint) {
-        uint sum;
-        for (uint i; i <= n; i++) {
-            sum += i;
-        }
-        return sum;
+    // Bug 6 - Optimized sum calculation using mathematical formula
+    function sumNumbers(uint n) public pure returns (uint) {
+        // Using the formula: sum = n * (n + 1) / 2
+        return (n * (n + 1)) / 2;
     }
 
-    // Bug 7
-    // Hint: Think about math operation overflow
+    // Bug 7 - Added overflow protection by checking multiplication
     function setCountWithMultiplication(uint x, uint y) public {
-        count = x * y;
+        uint result = x * y;
+        require(result / x == y, "Multiplication overflow");
+        count = result;
     }
 
-    // Bug 8
-    function resetCount() onlyOwner {
+    // Bug 8 - Added public visibility
+    function resetCount() public onlyOwner {
         count = 0;
     }
 
-    // Bug 9
+    // Bug 9 - Fixed toggle logic
     function togglePause() public onlyOwner {
-        isPaused = isPaused;
+        isPaused = !isPaused;
     }
 }
