@@ -19,7 +19,7 @@ contract BuggyStorage {
     // Bug 1: Array bounds
     function getNumber(uint index) public view returns (uint) {
         require(index < numbers.length, "Index out of bounds");
-        return numbers[index]; 
+        return numbers[index];
     }
 
     function addNumber(uint number) public {
@@ -28,7 +28,10 @@ contract BuggyStorage {
     }
 
     // Bug 2: Slice array correctly
-    function sliceArray(uint start, uint end) public view returns (uint[] memory) {
+    function sliceArray(
+        uint start,
+        uint end
+    ) public view returns (uint[] memory) {
         require(start < end && end <= numbers.length, "Invalid slice range");
 
         uint[] memory slicedArray = new uint[](end - start);
@@ -43,7 +46,7 @@ contract BuggyStorage {
     // Bug 3: Concatenate strings correctly
     function setMessage(string memory newMessage) public {
         require(bytes(newMessage).length > 0, "Message cannot be empty");
-        
+
         message = string(abi.encodePacked(message, newMessage));
     }
 
@@ -75,7 +78,7 @@ contract BuggyStorage {
     function updateBalance(address user, uint amount) public {
         // Task 6: Update balance of a user with a specific amount
         balances[user] = amount;
-        
+
         emit BalanceUpdated(user, amount);
     }
 }
