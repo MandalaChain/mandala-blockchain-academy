@@ -28,6 +28,8 @@ contract BuggyStorage {
     // Bug 2: Slice array correctly
     //fixed
     function sliceArray(uint256 start, uint256 end) public view returns (uint256[] memory) {
+        require(start < end, "end should be bigger than start");
+        require(end < numbers.length, "end cannot be bigger than the length of the numbers array");
         uint256[] memory slice;
 
         uint256 u = 0;
