@@ -69,6 +69,6 @@ contract BuggyStorage {
     function updateBalance(address user, uint amount) public {
         // Task 6: Update balance of a user with a specific amount
         //fixed
-        balances[user] = amount;
+        balances[user] += amount;
     }
 }
