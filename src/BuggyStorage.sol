@@ -46,12 +46,13 @@ contract BuggyStorage {
 
     // Bug 4: How do we update numbers with memory as params?
     function validMemoryUsage(uint256[] memory input) public {
+        uint256[] storage ref = numbers;
         // Implement logics to update numbers here
         require(input.length > 0,"input array must not be empty");
         for(uint256 i=0;i<input.length;i++) {
-            numbers.push(input[i]);
+            ref.push(input[i]);
         }
-        // uint256[] storage ref = input;
+        
     }
 
     function getBalance(address user) public view returns (uint256) {
