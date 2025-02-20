@@ -44,7 +44,7 @@ contract BuggyContract {
     // Hint: two things to do here.
     // Think about how to make the loop more efficient
     // and read the compiler
-    function sumNumbers(uint n) public returns (uint) {
+    function sumNumbers(uint n) public pure returns (uint) {
         uint256 result = (n * (n + 1)) / 2;
         return result;
     }
