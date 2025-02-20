@@ -4,8 +4,13 @@ pragma solidity ^0.8.0;
 contract BuggyStorage {
     // DO NOT EDIT COMMENTS
     // Task 1: Declare an array as numbers;
+    uint[] private numbers;
+
     // Task 2: Declare a string as message;
+    string private message;
+
     // Task 3: Declare a mapping of address to balance as balances;
+    mapping(address => uint) private balances;
 
     // Bug 1: Array bounds
     function getNumber(uint index) public view returns (uint) {
@@ -35,10 +40,7 @@ contract BuggyStorage {
 
     // Bug 4: How do we update numbers with memory as params?
     function validMemoryUsage(uint[] memory input) public {
-        delete numbers;
-        for (uint i = 0; i < input.length; i++) {
-            numbers.push(input[i]);
-        }
+        numbers = input;
     }
 
     function getBalance(address user) public view returns (uint) {
