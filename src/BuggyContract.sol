@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: UNLICENSED
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 pragma solidity ^0.8.13;
 
 contract BuggyContract {
@@ -7,7 +6,6 @@ contract BuggyContract {
     string messages;
     bool public isPaused;
     address owner;
-    using SafeMath for uint;
 
     modifier onlyOwner() {
         require(msg.sender == owner);
@@ -54,7 +52,9 @@ contract BuggyContract {
     // Bug 7
     // Hint: Think about math operation overflow
     function setCountWithMultiplication(uint x, uint y) public {
-        count = x.mul(y);
+        // count = x.mul(y);
+        require(x == 0 || (x * y) / x == y, "Multiplication overflow");
+        count = x * y;
     }
 
     // Bug 8
