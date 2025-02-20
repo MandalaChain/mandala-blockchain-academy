@@ -29,6 +29,7 @@ contract BuggyContract {
 
     // Bug 4
     function divideCount(uint divisor) public returns (uint) {
+        require(divisor != 0);
         count = count / divisor;
         return count;
     }
@@ -50,6 +51,7 @@ contract BuggyContract {
     // Bug 7
     // Hint: Think about math operation overflow
     function setCountWithMultiplication(uint x, uint y) public {
+        require(y==0 || x <= type(uint).max / y);
         count = x * y;
     }
 
