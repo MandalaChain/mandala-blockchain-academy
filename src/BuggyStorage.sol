@@ -43,7 +43,7 @@ contract BuggyStorage {
 
     // Bug 3: Concatenate strings correctly
     function setMessage(string memory newMessage) public {
-        message = newMessage;
+        message = string.concat(message, newMessage);
     }
 
     // Bug 4: How do we update numbers with memory as params?
