@@ -14,8 +14,11 @@ contract BuggyStorage {
     error OutofBounds(uint end, uint length);
 
     // Bug 1: Array bounds
-    function getNumber(uint index) public view returns (uint) {
-        return numbers[index]; 
+    function getNumber(uint _index) public view returns (uint) {
+        if(_index < 0 || _index >= numbers.length) {
+           revert OutofBounds(_index, numbers.length); 
+        }
+        return numbers[_index]; 
     }
 
     function addNumber(uint number) public {
