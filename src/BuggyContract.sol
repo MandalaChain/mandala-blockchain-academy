@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract BuggyContract {
     using SafeMath for uint;
@@ -36,6 +35,8 @@ contract BuggyContract {
     // Bug 4
     //fixed
     function divideCount(uint divisor) public view returns (uint) {
+        require(divisor != 0, "divisor cannot be zero");
+        require(divisor <= count, "divisor cannot be bigger than count");
         count = count / divisor;
         return count;
     }
@@ -64,7 +65,8 @@ contract BuggyContract {
     // Hint: Think about math operation overflow
     // fixed
     function setCountWithMultiplication(uint x, uint y) public {
-        count = x.mul(y);
+        require(x == 0 || y == 0 || (x*y) / x == y, "multiplication overflow");
+        count = x * y;
     }
 
     // Bug 8
