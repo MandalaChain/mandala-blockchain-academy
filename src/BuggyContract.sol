@@ -7,9 +7,9 @@ contract BuggyContract {
     address public immutable owner;
 
     // commented because bug 5 says to make it 'temporary'.
-    // string messages; 
+    // string messages;
 
-    modifier onlyOwner {
+    modifier onlyOwner() {
         require(msg.sender == owner);
         _;
     }
@@ -39,7 +39,7 @@ contract BuggyContract {
     // Bug 4
     function divideCount(uint divisor) public returns (uint) {
         require(divisor != 0, "Cannot divide by zero");
-        
+
         unchecked {
             count = count / divisor;
         }
@@ -58,7 +58,7 @@ contract BuggyContract {
     // Think about how to make the loop more efficient
     // and read the compiler
     function sumNumbers(uint n) public pure returns (uint) {
-        return n * (n + 1) / 2;
+        return (n * (n + 1)) / 2;
     }
 
     // Bug 7
