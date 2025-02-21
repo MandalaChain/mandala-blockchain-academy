@@ -48,10 +48,10 @@ contract BuggyStorage {
     // Bug 4: How do we update numbers with memory as params?
     function validMemoryUsage(uint256[] memory input) public {
         // Implement logics to update numbers here
-        delete _numbers;
+        uint[] storage ref = _numbers;
 
-        for (uint256 i = 0; i < input.length; i++) {
-            _numbers.push(input[i]);
+        for(uint i = 0;  i < input.length; i++) {
+            ref.push(input[i]);
         }
     }
 
